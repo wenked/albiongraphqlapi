@@ -1,0 +1,18 @@
+{
+	"name": "ablionapi",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "wenked <wenked.matheus@yahoo.com.br>",
+	"license": "MIT",
+	"scripts": {
+		"dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts"
+	},
+	"devDependencies": {
+		"ts-node-dev": "^1.0.0-pre.51",
+		"typescript": "^3.9.6"
+	},
+	"dependencies": {
+		"@types/express": "^4.17.7",
+		"express": "^4.17.1"
+	}
+}
