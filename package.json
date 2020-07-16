@@ -1,7 +1,7 @@
 {
 	"name": "ablionapi",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "server.js",
 	"author": "wenked <wenked.matheus@yahoo.com.br>",
 	"license": "MIT",
 	"scripts": {
