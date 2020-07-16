@@ -1,4 +1,6 @@
-import { formatedItem } from './objItems';
+export type formatedItem = {
+	[key: string]: string;
+};
 
 const TankArray = [
 	'Mace',

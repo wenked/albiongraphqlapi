@@ -13,6 +13,7 @@ import {
 	formatedPlayer,
 	Battle,
 	playerInfoWithWeapon,
+	BattleListStyle,
 } from './utils/types';
 
 const sortTopFame = (a: any, b: any): number => b.killFame - a.killFame;
@@ -29,11 +30,11 @@ export class AlbionApiDataSource extends RESTDataSource {
 	async getBattles(guildname: string) {
 		const data = await this.get(`search?q=${guildname}`);
 
-		const battles = await this.get(
+		const battles: BattleListStyle[] | undefined = await this.get(
 			`battles?offset=0&limit=50&sort=recent&guildId=${data.guilds[0].Id}`
 		);
 
-		return battles.map((battle: any) => {
+		return battles?.map((battle: BattleListStyle) => {
 			return {
 				alliances: _.map(battle.alliances, (alliance) => alliance),
 				battle_TIMEOUT: battle.battle_TIMEOUT,

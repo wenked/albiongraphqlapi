@@ -8,6 +8,19 @@ export interface Guild {
 	name: string;
 }
 
+export interface BattleListStyle {
+	alliances: any;
+	battle_TIMEOUT: number;
+	endTime: string;
+	guilds: any;
+	id: number;
+	players: any;
+	startTime: string;
+	timeout: string;
+	totalFame: number;
+	totalKills: number;
+}
+
 export interface Alliance {
 	deaths: number;
 	id: string;
