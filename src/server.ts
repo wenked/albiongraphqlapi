@@ -12,6 +12,9 @@ type argsResolver = {
 
 const resolvers: IResolverObject = {
 	Query: {
+		battleList: (obj, args, { dataSources }, info) => {
+			return dataSources.albionApi.getBattles(args.guildName);
+		},
 		battleById: (obj, args, { dataSources }, info) => {
 			return dataSources.albionApi.getBattleById(args.id);
 		},

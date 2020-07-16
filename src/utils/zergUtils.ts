@@ -1946,11 +1946,29 @@ const getRole = (string: string) => {
 	return 'nda';
 };
 
-const handleguild = (guild: string) => {
+export const handleguild = (guild: string) => {
 	if (guild === '' || null) {
 		return 'No Guild';
 	}
 	return guild;
+};
+
+export const organizeKillers = (obj: any, item: any) => {
+	if (item !== null) {
+		return Object.assign(obj, {
+			[item.Id]: item,
+		});
+	}
+	return Object.assign(obj, { nada: 'nada' });
+};
+
+export const organizeDeaths = (obj: any, item: any) => {
+	if (item.Victim !== null) {
+		return Object.assign(obj, {
+			[item.Victim.Id]: item.Victim,
+		});
+	}
+	return Object.assign(obj, { nada: 'nada' });
 };
 
 export {
@@ -1959,7 +1977,6 @@ export {
 	SupportArray,
 	HealerArray,
 	RangedDpsArray,
-	handleguild,
 	organizeItems,
 	getRole,
 	convertString,

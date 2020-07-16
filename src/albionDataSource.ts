@@ -1,137 +1,19 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import objItems from './utils/objItems';
-import { getRole } from './utils/zergUtils';
+import {
+	getRole,
+	organizeKillers,
+	organizeDeaths,
+	handleguild,
+} from './utils/zergUtils';
 import _ from 'lodash';
-
-const handleguild = (guild: string) => {
-	if (guild === '' || null) {
-		return 'No Guild';
-	}
-	return guild;
-};
-
-type formated = {
-	[key: string]: any;
-};
-
-interface Guild {
-	alliance: string;
-	allianceId: string;
-	deaths: number;
-	id: string;
-	killFame: number;
-	kills: number;
-	name: string;
-}
-
-interface Alliance {
-	deaths: number;
-	id: string;
-	killFame: number;
-	kills: number;
-	name: string;
-}
-
-interface Player {
-	AllianceId: string;
-	AllianceName: string;
-	AllianceTag: string;
-	AverageItemPower: number;
-	DamageDone: number;
-	DeathFame: number;
-	Equipment: {
-		MainHand: {
-			Type: string;
-		};
-	};
-	FameRatio: number;
-	GuildId: string;
-	GuildName: string;
-	Id: string;
-	KillFame: number;
-	Name: string;
-	SupportHealingDone: number;
-}
-
-interface formatedPlayer {
-	name: string;
-	kills: number;
-	deaths: number;
-	guildName: string;
-	guildId: string;
-	allianceName: string;
-	allianceId: string;
-	id: string;
-	weapon: string;
-	role: string;
-	killFame: number;
-	averageIp: number;
-}
-
-interface Battle {
-	BattleId: number;
-	EventId: number;
-	GroupMembers: Player[];
-	Killer: Player;
-	Participants: Player[];
-	TimeStamp: string;
-	TotalVictimKillFame: number;
-	Type: string;
-	Version: number;
-	Victim: Player;
-	groupMemberCount: number;
-	numberOfParticipants: number;
-}
-
-interface playerInfoWithWeapon {
-	name: string;
-	guild: string;
-	weapon: string;
-	id: string;
-	role: string;
-	guildid: string;
-}
-/*
-interface killboard {
-	alliances: {
-		[key:string]: {
-			deaths: number,
-id: string,
-killFame: number,
-kills: number,
-name: string,
-		}
-	}
-battle_TIMEOUT: number,
-clusterName: null
-endTime: string,
-guilds: 
-id: number,
-players: 
-startTime: string,
-timeout: string,
-totalFame: number,
-totalKills: number,
-}
-*/
-
-const organizeKillers = (obj: any, item: any) => {
-	if (item !== null) {
-		return Object.assign(obj, {
-			[item.Id]: item,
-		});
-	}
-	return Object.assign(obj, { nada: 'nada' });
-};
-
-const organizeDeaths = (obj: any, item: any) => {
-	if (item.Victim !== null) {
-		return Object.assign(obj, {
-			[item.Victim.Id]: item.Victim,
-		});
-	}
-	return Object.assign(obj, { nada: 'nada' });
-};
+import {
+	Guild,
+	Alliance,
+	Player,
+	formatedPlayer,
+	Battle,
+	playerInfoWithWeapon,
+} from './utils/types';
 
 const sortTopFame = (a: any, b: any): number => b.killFame - a.killFame;
 const reducer = (acc: any, vAt: any) => {
@@ -148,12 +30,20 @@ export class AlbionApiDataSource extends RESTDataSource {
 		const data = await this.get(`search?q=${guildname}`);
 
 		const battles = await this.get(
-			`events?limit=51&offset=0&guildId=${data.guilds[0].Id}`
+			`battles?offset=0&limit=50&sort=recent&guildId=${data.guilds[0].Id}`
 		);
 
-		return battles.map((battle: Battle) => {
+		return battles.map((battle: any) => {
 			return {
-				BattleId: battle.BattleId,
+				alliances: _.map(battle.alliances, (alliance) => alliance),
+				battle_TIMEOUT: battle.battle_TIMEOUT,
+				endTime: battle.endTime,
+				guilds: _.map(battle.guilds, (guild) => guild),
+				id: battle.id,
+				startTime: battle.startTime,
+				totalFame: battle.totalFame,
+				totalKills: battle.totalKills,
+				totalPlayers: _.map(battle.players, (player) => player).length,
 			};
 		});
 	}
@@ -169,19 +59,16 @@ export class AlbionApiDataSource extends RESTDataSource {
 			events.push(data);
 		}
 
-		//console.log(events.flat().length);
 		let battleFlat = events.flat();
 		let participansFlat = _.uniqBy(
 			battleFlat.map((event) => event.Participants).flat(),
 			'Id'
 		);
 
-		//console.log(participansFlat);
-		//let participantsEvents = participansFlat.reduce()
 		let killersAndAssistsEvents = participansFlat.reduce(organizeKillers, {});
-		//console.log(killersAndAssistsEvents);
+
 		let deathEvents = battleFlat.reduce(organizeDeaths, {});
-		//	console.log(deathEvents);
+
 		let playersWithItems = battleFlat.map((eventkill) =>
 			eventkill.GroupMembers.map(
 				(member): playerInfoWithWeapon => {
@@ -235,7 +122,6 @@ export class AlbionApiDataSource extends RESTDataSource {
 			.map((player) => {
 				if (player.killFame > 0) {
 					let newplayer = killersAndAssistsEvents[player.id];
-					//console.log(newplayer);
 
 					return {
 						...player,
@@ -375,18 +261,3 @@ export class AlbionApiDataSource extends RESTDataSource {
 		};
 	}
 }
-
-/*
-startTime: "2020-07-15T00:02:58.520408400Z"
-endTime: "2020-07-15T00:03:58.639706800Z"
-timeout: "2020-07-15T00:06:58.639706800Z"
-totalFame: 65081
-totalKills: 5
-
-*/
-
-// https://gameinfo.albiononline.com/api/gameinfo/events/battle/100273044?offset=450&limit=51
-
-//https://gameinfo.albiononline.com/api/gameinfo/events/battle/100273044?offset=0&limit=51
-
-//https://gameinfo.albiononline.com/api/gameinfo/search?q=elevate

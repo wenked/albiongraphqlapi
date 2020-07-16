@@ -21,12 +21,14 @@ export const typeDefs = gql`
 		kills: Int
 		killFame: Int
 		id: String
+		deaths: Int
 	}
 
 	type Guild {
 		alliance: String
 		allianceId: String
 		deaths: Int
+		id: String
 		killFame: Int
 		kills: Int
 		name: String
@@ -54,7 +56,20 @@ export const typeDefs = gql`
 		totalPlayers: Int
 	}
 
+	type Battle2 {
+		alliances: [Ally]
+		endTime: Int
+		guilds: [Guild]
+		startTime: String
+		totalFame: Int
+		totalKills: Int
+		totalPlayers: Int
+		id: Int
+		battle_TIMEOUT: Int
+	}
+
 	type Query {
+		battleList(guildName: String!): [Battle2]
 		battleById(id: Int!): Battle
 	}
 `;
