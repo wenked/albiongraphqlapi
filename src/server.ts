@@ -6,10 +6,6 @@ import { AlbionApiDataSource } from './albionDataSource';
 
 const app = express();
 
-type argsResolver = {
-	guildname: string;
-};
-
 const resolvers: IResolverObject = {
 	Query: {
 		battleList: (obj, args, { dataSources }, info) => {
