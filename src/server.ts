@@ -3,9 +3,10 @@ import { typeDefs } from './models/typeDefs';
 //import { resolvers } from './models/resolvers';
 import express from 'express';
 import { AlbionApiDataSource } from './albionDataSource';
+import dotenv from 'dotenv';
 
 const app = express();
-
+dotenv.config();
 const resolvers: IResolverObject = {
 	Query: {
 		battleList: (obj, args, { dataSources }, info) => {
@@ -20,6 +21,9 @@ const resolvers: IResolverObject = {
 const server = new ApolloServer({
 	typeDefs,
 	resolvers: resolvers as any,
+	engine: {
+		reportSchema: true,
+	},
 	dataSources: () => {
 		return { albionApi: new AlbionApiDataSource() };
 	},
@@ -27,6 +31,6 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-app.listen({ port: 4000 }, () =>
+app.listen({ port: process.env.PORT || 4000 }, () =>
 	console.log(`server ready at http://localhost:4000${server.graphqlPath}`)
 );
