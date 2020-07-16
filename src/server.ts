@@ -12,21 +12,9 @@ type argsResolver = {
 
 const resolvers: IResolverObject = {
 	Query: {
-		battles: (obj, args: argsResolver, { dataSources }, info) => {
-			return dataSources.albionApi.getGuilds(args.guildname);
-		},
-
 		battleById: (obj, args, { dataSources }, info) => {
 			return dataSources.albionApi.getBattleById(args.id);
 		},
-
-		/*guilds2: async (obj, args: argsResolver, context, info) => {
-			const response = await axios.get(
-				`https://gameinfo.albiononline.com/api/gameinfo/search?q=${args.guildname}`
-			);
-
-			return response.data.guilds;
-		},*/
 	},
 };
 

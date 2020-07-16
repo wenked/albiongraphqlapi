@@ -1,20 +1,61 @@
 import { gql } from 'apollo-server-express';
 
 export const typeDefs = gql`
-	type Battle1 {
-		BattleId: Int
+	type Player {
+		name: String
+		kills: Int
+		deaths: Int
+		guildName: String
+		guildId: String
+		allianceName: String
+		allianceId: String
+		id: String
+		weapon: String
+		role: String
+		killFame: Int
+		averageIp: Float
 	}
 
-	type Battle2 {
+	type Ally {
+		name: String
+		kills: Int
+		killFame: Int
+		id: String
+	}
+
+	type Guild {
+		alliance: String
+		allianceId: String
+		deaths: Int
+		killFame: Int
+		kills: Int
+		name: String
+	}
+
+	type Stats {
+		alliances: [Ally]
+		guilds: [Guild]
+		totalFame: Int
+		players: [Player]
+		kills: Int
+		deaths: Int
+		totalPlayers: Int
+	}
+
+	type Battle {
 		battleId: Int
 		totalKills: Int
 		totalFame: Int
-		guilds: [String]
+		players: [Player]
+		startTime: String
+		endTime: String
+		winners: Stats
+		losers: Stats
+		totalPlayers: Int
 	}
 
 	type Query {
-		battles(guildname: String!): [Battle1]
-		battleById(id: Int!): Battle2
+		battleById(id: Int!): Battle
 	}
 `;
 
