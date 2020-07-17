@@ -295,7 +295,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 				guilds: handlerResult().winnerGuilds,
 				totalFame: handlerResult().winnerTotalFame,
 				players: handlerResult().playersWinners.sort(
-					(a, b) => b.totalFame - a.totalFame
+					(a, b) => a.totalFame - b.totalFame
 				),
 				kills: handlerResult().winnerTotalKIlls,
 				deaths: handlerResult().winnerTotalDeaths,
@@ -306,7 +306,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 				guilds: handlerResult().loserGuilds,
 				totalFame: handlerResult().loserTotalFame,
 				players: handlerResult().playersLosers.sort(
-					(a, b) => b.totalFame - a.totalFame
+					(a, b) => a.totalFame - b.totalFame
 				),
 				kills: handlerResult().loserTotalKills,
 				deaths: handlerResult().loserTotalDeaths,
