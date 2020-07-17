@@ -34,6 +34,12 @@
 		"ioredis": "^4.17.3",
 		"lodash": "^4.17.19",
 		"mongoose": "^5.9.24",
-		"redis-server": "^1.2.2"
+		"redis-server": "^1.2.2",
+		"@babel/cli": "^7.10.4",
+		"@babel/core": "^7.10.4",
+		"@babel/node": "^7.10.4",
+		"@babel/preset-env": "^7.10.4",
+		"ts-node-dev": "^1.0.0-pre.51",
+		"typescript": "^3.9.6"
 	}
 }
