@@ -15,7 +15,6 @@ import {
 	playerInfoWithWeapon,
 	BattleListStyle,
 } from './utils/types';
-import { kill } from 'process';
 
 const sortTopFame = (a: any, b: any): number => b.killFame - a.killFame;
 const reducer = (acc: any, vAt: any) => {
@@ -96,23 +95,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 			)
 		);
 
-		/*
-		name: 'vNs',
-    kills: 0,
-    deaths: 1,
-    killFame: 29193,
-    guildName: 'Crimson Imperium Reborn',
-    guildId: 'upkzMP-iSqSfYEPJou9mSA',
-    allianceName: 'POE',
-    allianceId: 'aE8QATe2RUCJU0d23y_w2w',
-    id: 'EshldddjT6C6NqPMBnLDCA'
-  },
-		
-		*/
-
 		const noFilterPlayersInfo = playersWithItems.flat();
-		//console.log(noFilterPlayersInfo, 'nofilter');
-		//	console.log(_.uniqBy(noFilterPlayersInfo, 'id').length, 'uniq');
 
 		let playersInfo = _.uniqBy(noFilterPlayersInfo, 'id');
 
@@ -176,6 +159,10 @@ export class AlbionApiDataSource extends RESTDataSource {
 					role:
 						newplayer !== undefined &&
 						getRole(newplayer.Equipment.MainHand.Type),
+					averageIp:
+						newplayer !== undefined && newplayer.AverageItemPower
+							? newplayer.AverageItemPower
+							: null,
 				};
 			}
 			let newplayer = deathEvents[player2.id];
@@ -184,10 +171,12 @@ export class AlbionApiDataSource extends RESTDataSource {
 				weapon: newplayer !== undefined && newplayer.Equipment.MainHand.Type,
 				role:
 					newplayer !== undefined && getRole(newplayer.Equipment.MainHand.Type),
+				averageIp:
+					newplayer !== undefined && newplayer.AverageItemPower
+						? newplayer.AverageItemPower
+						: null,
 			};
 		});
-
-		console.log(mergeWithItems.length);
 
 		const handlerResult = () => {
 			const arrAlly: Alliance[] = _.map(
@@ -206,15 +195,6 @@ export class AlbionApiDataSource extends RESTDataSource {
 					};
 				});
 
-			/*const teste = arrGuild.map((guild) => {
-				return {
-					...guild,
-					totalPlayers: newPlayersObj.filter(
-						(player) => player.guildName === guild.name
-					).length,
-				};
-			});*/
-			//console.log(teste);
 			const winnerAlly = arrAlly[0];
 
 			const winnerGuild = arrGuild[0];
