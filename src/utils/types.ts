@@ -6,6 +6,7 @@ export interface Guild {
 	killFame: number;
 	kills: number;
 	name: string;
+	totalPlayers: number,
 }
 
 export interface BattleListStyle {

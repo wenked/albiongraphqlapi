@@ -32,6 +32,7 @@ export const typeDefs = gql`
 		killFame: Int
 		kills: Int
 		name: String
+		totalPlayers: Int
 	}
 
 	type Stats {

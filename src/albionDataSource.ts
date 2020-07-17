@@ -15,6 +15,7 @@ import {
 	playerInfoWithWeapon,
 	BattleListStyle,
 } from './utils/types';
+import { kill } from 'process';
 
 const sortTopFame = (a: any, b: any): number => b.killFame - a.killFame;
 const reducer = (acc: any, vAt: any) => {
@@ -95,13 +96,25 @@ export class AlbionApiDataSource extends RESTDataSource {
 			)
 		);
 
-		const noFilterPlayersInfo = playersWithItems.flat();
+		/*
+		name: 'vNs',
+    kills: 0,
+    deaths: 1,
+    killFame: 29193,
+    guildName: 'Crimson Imperium Reborn',
+    guildId: 'upkzMP-iSqSfYEPJou9mSA',
+    allianceName: 'POE',
+    allianceId: 'aE8QATe2RUCJU0d23y_w2w',
+    id: 'EshldddjT6C6NqPMBnLDCA'
+  },
+		
+		*/
 
-		let playersInfo = Array.from(
-			new Set(noFilterPlayersInfo.map((a) => a.name))
-		).map((name) => {
-			return noFilterPlayersInfo.find((a) => a.name === name);
-		});
+		const noFilterPlayersInfo = playersWithItems.flat();
+		//console.log(noFilterPlayersInfo, 'nofilter');
+		//	console.log(_.uniqBy(noFilterPlayersInfo, 'id').length, 'uniq');
+
+		let playersInfo = _.uniqBy(noFilterPlayersInfo, 'id');
 
 		const newPlayersObj: formatedPlayer[] = playersInfo
 			.map((player) => {
@@ -136,6 +149,45 @@ export class AlbionApiDataSource extends RESTDataSource {
 					};
 				}
 			});
+		const playersKb = _.map(killboard.players, (players) => players);
+		const mergePlayers = _.map(playersKb, (player) => {
+			let player2 = _.find(newPlayersObj, { id: player.id });
+			if (player2 !== undefined) {
+				return player2;
+			}
+
+			return {
+				...player,
+				role: '',
+				weapon: '',
+				averageIp: null,
+			};
+		});
+
+		const mergeWithItems = mergePlayers.map((player2) => {
+			if (player2.role !== '') {
+				return player2;
+			}
+			if (player2.killFame > 0) {
+				let newplayer = killersAndAssistsEvents[player2.id];
+				return {
+					...player2,
+					weapon: newplayer !== undefined && newplayer.Equipment.MainHand.Type,
+					role:
+						newplayer !== undefined &&
+						getRole(newplayer.Equipment.MainHand.Type),
+				};
+			}
+			let newplayer = deathEvents[player2.id];
+			return {
+				...player2,
+				weapon: newplayer !== undefined && newplayer.Equipment.MainHand.Type,
+				role:
+					newplayer !== undefined && getRole(newplayer.Equipment.MainHand.Type),
+			};
+		});
+
+		console.log(mergeWithItems.length);
 
 		const handlerResult = () => {
 			const arrAlly: Alliance[] = _.map(
@@ -143,9 +195,26 @@ export class AlbionApiDataSource extends RESTDataSource {
 				(alliance) => alliance
 			).sort(sortTopFame);
 
-			const arrGuild: Guild[] = _.map(killboard.guilds, (guild) => guild).sort(
-				sortTopFame
-			);
+			const arrGuild: Guild[] = _.map(killboard.guilds, (guild) => guild)
+				.sort(sortTopFame)
+				.map((guild) => {
+					return {
+						...guild,
+						totalPlayers: _.map(killboard.players, (players) => players).filter(
+							(player) => player.guildName === guild.name
+						).length,
+					};
+				});
+
+			/*const teste = arrGuild.map((guild) => {
+				return {
+					...guild,
+					totalPlayers: newPlayersObj.filter(
+						(player) => player.guildName === guild.name
+					).length,
+				};
+			});*/
+			//console.log(teste);
 			const winnerAlly = arrAlly[0];
 
 			const winnerGuild = arrGuild[0];
@@ -158,11 +227,11 @@ export class AlbionApiDataSource extends RESTDataSource {
 					(guild) => guild.name !== winnerGuild.name
 				);
 
-				const playersWinners = newPlayersObj.filter(
+				const playersWinners = mergeWithItems.filter(
 					(player) => player.guildName === winnerGuild.name
 				);
 
-				const playersLosers = newPlayersObj.filter(
+				const playersLosers = mergeWithItems.filter(
 					(player) => player.guildName !== winnerGuild.name
 				);
 
@@ -206,10 +275,10 @@ export class AlbionApiDataSource extends RESTDataSource {
 				(guild) => guild.alliance !== winnerAlly.name
 			);
 
-			const playersWinners = newPlayersObj.filter(
+			const playersWinners = mergeWithItems.filter(
 				(player) => player.allianceName === winnerAlly.name
 			);
-			const playersLosers = newPlayersObj.filter(
+			const playersLosers = mergeWithItems.filter(
 				(player) => player.allianceName !== winnerAlly.name
 			);
 
@@ -240,7 +309,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 			players: newPlayersObj,
 			startTime: killboard.startTime,
 			endTime: killboard.endTime,
-			totalPlayers: newPlayersObj.length,
+			totalPlayers: _.map(killboard.players, (players) => players).length,
 			winners: {
 				alliances: handlerResult().winnerAllys,
 				guilds: handlerResult().winnerGuilds,
