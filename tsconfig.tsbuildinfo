@@ -2321,6 +2321,8 @@
       ],
       "allowJs": true,
       "sourceMap": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
       "removeComments": true,
       "strict": false,
       "typeRoots": [
