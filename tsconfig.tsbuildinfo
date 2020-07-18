@@ -792,13 +792,18 @@
         "affectsGlobalScope": true
       },
       "./src/utils/types.ts": {
-        "version": "13a660129c0842b3f7ad03251cd9d9fe6655c73c9291c09294fb46eb463b0d9b",
-        "signature": "f230272fff344c331c28bcebf168505bb0e01532f5d7c3c9b1aad075e88d2323",
+        "version": "d136039e0143b985aa4fa5e4612d5824001746b896be9d4903d4881f245d027a",
+        "signature": "d7c9e5980c1dafbd0f77d40b8f17975f4abbe0298a10ed44f3bcd4040bd37410",
+        "affectsGlobalScope": false
+      },
+      "./src/utils/resulthandler.ts": {
+        "version": "1399a69edfba39ec2c52dde7c5513ab79a6ccfc03735f1cadc8995ceebd193e4",
+        "signature": "0380c1481690556280d2e1d5aba035bcef78a9f9b41a0abf556bf2305cf7add4",
         "affectsGlobalScope": false
       },
       "./src/albiondatasource.ts": {
-        "version": "20d680bcbe35bda3d16effcfd928837e95df95db47a4a4d8cf9cee0861af4edb",
-        "signature": "48e8e055f658514a119a6c1cd2b5f88fed7cd67db058bd4d699828ba55a16066",
+        "version": "83325067c910b54aecd8b172b6a9031698f9c07617c5e7e522fea146387b8e78",
+        "signature": "89611bdcee048c6b71a73e29e0bde4694206b5e602239919cb69a68fe4292a66",
         "affectsGlobalScope": false
       },
       "./node_modules/graphql-extensions/dist/index.d.ts": {
@@ -7291,6 +7296,7 @@
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/apollo-datasource-rest/dist/index.d.ts",
+        "./src/utils/resulthandler.ts",
         "./src/utils/types.ts",
         "./src/utils/zergutils.ts"
       ],
@@ -7316,7 +7322,18 @@
         "./src/albiondatasource.ts",
         "./src/models/typedefs.ts"
       ],
+      "./src/utils/resulthandler.ts": [
+        "./node_modules/@types/lodash/ts3.1/index.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/process.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/process.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./src/utils/types.ts"
+      ],
       "./src/utils/types.ts": [
+        "./node_modules/@types/node/dns.d.ts",
         "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/process.d.ts",
         "./node_modules/@types/node/ts3.2/fs.d.ts",
@@ -12286,6 +12303,9 @@
       ],
       "./src/models/typedefs.ts": [
         "./node_modules/graphql/index.d.ts"
+      ],
+      "./src/utils/resulthandler.ts": [
+        "./src/utils/types.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -12749,6 +12769,7 @@
       "./src/albiondatasource.ts",
       "./src/models/typedefs.ts",
       "./src/server.ts",
+      "./src/utils/resulthandler.ts",
       "./src/utils/types.ts",
       "./src/utils/zergutils.ts"
     ]
