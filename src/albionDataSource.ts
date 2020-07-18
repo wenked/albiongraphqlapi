@@ -156,6 +156,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 			}
 			if (player2.killFame > 0) {
 				let newplayer = killersAndAssistsEvents[player2.id];
+
 				return {
 					...player2,
 					weapon:
