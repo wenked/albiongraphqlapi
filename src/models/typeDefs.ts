@@ -71,7 +71,7 @@ export const typeDefs = gql`
 
 	type Query {
 		battleList(guildName: String!): [Battle2]
-		battleById(id: Int!): Battle
+		battleById(id: Int): Battle
 	}
 `;
 

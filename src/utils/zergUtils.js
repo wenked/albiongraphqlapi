@@ -1,7 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.convertString = exports.getRole = exports.organizeItems = exports.RangedDpsArray = exports.HealerArray = exports.SupportArray = exports.TankArray = exports.MeleeDpsArray = exports.organizeDeaths = exports.organizeKillers = exports.handleguild = void 0;
-const TankArray = [
+var TankArray = [
     'Mace',
     'Heavy Mace',
     'Morning Star',
@@ -22,7 +22,7 @@ const TankArray = [
     'Staff of Balance',
 ];
 exports.TankArray = TankArray;
-const HealerArray = [
+var HealerArray = [
     'Great Holy Staff',
     'Divine Staff',
     'Lifetouch Staff',
@@ -36,7 +36,7 @@ const HealerArray = [
     'Rampant Staff',
 ];
 exports.HealerArray = HealerArray;
-const SupportArray = [
+var SupportArray = [
     'Arcane Staff',
     'Great Arcane Staff',
     'Enigmatic Staff',
@@ -46,7 +46,7 @@ const SupportArray = [
     'Icicle Staff',
 ];
 exports.SupportArray = SupportArray;
-const RangedDpsArray = [
+var RangedDpsArray = [
     'Permafrost Prism',
     'Frost Staff',
     'Great Frost Staff',
@@ -78,7 +78,7 @@ const RangedDpsArray = [
     'Siegebow',
 ];
 exports.RangedDpsArray = RangedDpsArray;
-const MeleeDpsArray = [
+var MeleeDpsArray = [
     'Pike',
     'Glaive',
     'Heron Spear',
@@ -104,7 +104,7 @@ const MeleeDpsArray = [
     'Galatine Pair',
 ];
 exports.MeleeDpsArray = MeleeDpsArray;
-const tankarray = {
+var tankarray = {
     T4_ARTEFACT_2H_MACE_MORGANA: "Adept's Imbued Mace Head",
     T4_ARTEFACT_MAIN_MACE_HELL: "Adept's Infernal Mace Head",
     T5_ARTEFACT_2H_MACE_MORGANA: "Expert's Imbued Mace Head",
@@ -492,9 +492,9 @@ const tankarray = {
     T8_2H_ROCKSTAFF_KEEPER: "Elder's Staff of Balance",
     'T8_2H_ROCKSTAFF_KEEPER@1': "Elder's Staff of Balance",
     'T8_2H_ROCKSTAFF_KEEPER@2': "Elder's Staff of Balance",
-    'T8_2H_ROCKSTAFF_KEEPER@3': "Elder's Staff of Balance",
+    'T8_2H_ROCKSTAFF_KEEPER@3': "Elder's Staff of Balance"
 };
-const healerArray = {
+var healerArray = {
     T4_2H_HOLYSTAFF: "Adept's Great Holy Staff",
     'T4_2H_HOLYSTAFF@1': "Adept's Great Holy Staff",
     'T4_2H_HOLYSTAFF@2': "Adept's Great Holy Staff",
@@ -715,9 +715,9 @@ const healerArray = {
     T8_2H_NATURESTAFF_KEEPER: "Elder's Rampant Staff",
     'T8_2H_NATURESTAFF_KEEPER@1': "Elder's Rampant Staff",
     'T8_2H_NATURESTAFF_KEEPER@2': "Elder's Rampant Staff",
-    'T8_2H_NATURESTAFF_KEEPER@3': "Elder's Rampant Staff",
+    'T8_2H_NATURESTAFF_KEEPER@3': "Elder's Rampant Staff"
 };
-const supportArray = {
+var supportArray = {
     T3_MAIN_ARCANESTAFF: "Journeyman's Arcane Staff",
     T4_MAIN_ARCANESTAFF: "Adept's Arcane Staff",
     'T4_MAIN_ARCANESTAFF@1': "Adept's Arcane Staff",
@@ -858,9 +858,9 @@ const supportArray = {
     T8_2H_ICEGAUNTLETS_HELL: "Elder's Icicle Staff",
     'T8_2H_ICEGAUNTLETS_HELL@1': "Elder's Icicle Staff",
     'T8_2H_ICEGAUNTLETS_HELL@2': "Elder's Icicle Staff",
-    'T8_2H_ICEGAUNTLETS_HELL@3': "Elder's Icicle Staff",
+    'T8_2H_ICEGAUNTLETS_HELL@3': "Elder's Icicle Staff"
 };
-const rangedDps = {
+var rangedDps = {
     T4_2H_ICECRYSTAL_UNDEAD: "Adept's Permafrost Prism",
     'T4_2H_ICECRYSTAL_UNDEAD@1': "Adept's Permafrost Prism",
     'T4_2H_ICECRYSTAL_UNDEAD@2': "Adept's Permafrost Prism",
@@ -1449,9 +1449,9 @@ const rangedDps = {
     T8_2H_CROSSBOWLARGE_MORGANA: "Elder's Siegebow",
     'T8_2H_CROSSBOWLARGE_MORGANA@1': "Elder's Siegebow",
     'T8_2H_CROSSBOWLARGE_MORGANA@2': "Elder's Siegebow",
-    'T8_2H_CROSSBOWLARGE_MORGANA@3': "Elder's Siegebow",
+    'T8_2H_CROSSBOWLARGE_MORGANA@3': "Elder's Siegebow"
 };
-const meleeDps = {
+var meleeDps = {
     T4_FISH_FRESHWATER_ALL_COMMON: 'Bluescale Pike',
     T4_2H_SPEAR: "Adept's Pike",
     'T4_2H_SPEAR@1': "Adept's Pike",
@@ -1900,24 +1900,28 @@ const meleeDps = {
     T8_2H_DUALSCIMITAR_UNDEAD: "Elder's Galatine Pair",
     'T8_2H_DUALSCIMITAR_UNDEAD@1': "Elder's Galatine Pair",
     'T8_2H_DUALSCIMITAR_UNDEAD@2': "Elder's Galatine Pair",
-    'T8_2H_DUALSCIMITAR_UNDEAD@3': "Elder's Galatine Pair",
+    'T8_2H_DUALSCIMITAR_UNDEAD@3': "Elder's Galatine Pair"
 };
-const organizeItems = (obj, item) => {
+var organizeItems = function (obj, item) {
+    var _a;
     if (item.LocalizedNames !== null) {
-        return Object.assign(obj, {
-            [item.UniqueName]: item.LocalizedNames['EN-US'],
-        });
+        return Object.assign(obj, (_a = {},
+            _a[item.UniqueName] = item.LocalizedNames['EN-US'],
+            _a));
     }
     return Object.assign(obj, { nada: 'nada' });
 };
 exports.organizeItems = organizeItems;
-const convertString = (string) => {
+/*{BattleInfo.endTime
+    .replace(/T/g, ' ')
+    .substring(0, BattleInfo.endTime.replace(/T/g, ' ').indexOf('.'))}*/
+var convertString = function (string) {
     return string
         .replace(/T/g, ' ')
         .substring(0, string.replace(/T/g, ' ').indexOf('.'));
 };
 exports.convertString = convertString;
-const getRole = (string) => {
+var getRole = function (string) {
     if (Object.keys(tankarray).includes(string) === true) {
         return 'Tank';
     }
@@ -1936,25 +1940,27 @@ const getRole = (string) => {
     return 'nda';
 };
 exports.getRole = getRole;
-exports.handleguild = (guild) => {
+exports.handleguild = function (guild) {
     if (guild === '' || null) {
         return 'No Guild';
     }
     return guild;
 };
-exports.organizeKillers = (obj, item) => {
+exports.organizeKillers = function (obj, item) {
+    var _a;
     if (item !== null) {
-        return Object.assign(obj, {
-            [item.Id]: item,
-        });
+        return Object.assign(obj, (_a = {},
+            _a[item.Id] = item,
+            _a));
     }
     return Object.assign(obj, { nada: 'nada' });
 };
-exports.organizeDeaths = (obj, item) => {
+exports.organizeDeaths = function (obj, item) {
+    var _a;
     if (item.Victim !== null) {
-        return Object.assign(obj, {
-            [item.Victim.Id]: item.Victim,
-        });
+        return Object.assign(obj, (_a = {},
+            _a[item.Victim.Id] = item.Victim,
+            _a));
     }
     return Object.assign(obj, { nada: 'nada' });
 };
