@@ -1,3 +1,5 @@
+import { SrvRecord } from 'dns';
+
 export interface Guild {
 	alliance: string;
 	allianceId: string;
@@ -6,7 +8,7 @@ export interface Guild {
 	killFame: number;
 	kills: number;
 	name: string;
-	totalPlayers: number,
+	totalPlayers: number;
 }
 
 export interface BattleListStyle {
@@ -30,6 +32,21 @@ export interface Alliance {
 	name: string;
 }
 
+export interface formatedPlayer {
+	name: string;
+	kills: number;
+	deaths: number;
+	guildName: string;
+	guildId: string;
+	allianceName: string;
+	allianceId: string;
+	id: string;
+	weapon: string;
+	role: string;
+	killFame: number;
+	averageIp: number | null;
+}
+
 export interface Player {
 	AllianceId: string;
 	AllianceName: string;
@@ -49,21 +66,6 @@ export interface Player {
 	KillFame: number;
 	Name: string;
 	SupportHealingDone: number;
-}
-
-export interface formatedPlayer {
-	name: string;
-	kills: number;
-	deaths: number;
-	guildName: string;
-	guildId: string;
-	allianceName: string;
-	allianceId: string;
-	id: string;
-	weapon: string;
-	role: string;
-	killFame: number;
-	averageIp: number;
 }
 
 export interface Battle {
