@@ -165,6 +165,8 @@ export class AlbionApiDataSource extends RESTDataSource {
 						newplayer.Equipment.MainHand.Type,
 					role:
 						newplayer !== undefined &&
+						newplayer !== undefined &&
+						null &&
 						getRole(newplayer.Equipment.MainHand.Type),
 					averageIp:
 						newplayer !== undefined && newplayer.AverageItemPower
