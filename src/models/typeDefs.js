@@ -1,28 +1,12 @@
-'use strict';
-var __makeTemplateObject =
-	(this && this.__makeTemplateObject) ||
-	function (cooked, raw) {
-		if (Object.defineProperty) {
-			Object.defineProperty(cooked, 'raw', { value: raw });
-		} else {
-			cooked.raw = raw;
-		}
-		return cooked;
-	};
+"use strict";
+var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
 exports.__esModule = true;
 exports.typeDefs = void 0;
-var apollo_server_express_1 = require('apollo-server-express');
-exports.typeDefs = apollo_server_express_1.gql(
-	templateObject_1 ||
-		(templateObject_1 = __makeTemplateObject(
-			[
-				'\n\ttype Player {\n\t\tname: String\n\t\tkills: Int\n\t\tdeaths: Int\n\t\tguildName: String\n\t\tguildId: String\n\t\tallianceName: String\n\t\tallianceId: String\n\t\tid: String\n\t\tweapon: String\n\t\trole: String\n\t\tkillFame: Int\n\t\taverageIp: Float\n\t}\n\n\ttype Ally {\n\t\tname: String\n\t\tkills: Int\n\t\tkillFame: Int\n\t\tid: String\n\t\tdeaths: Int\n\t}\n\n\ttype Guild {\n\t\talliance: String\n\t\tallianceId: String\n\t\tdeaths: Int\n\t\tid: String\n\t\tkillFame: Int\n\t\tkills: Int\n\t\tname: String\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Stats {\n\t\talliances: [Ally]\n\t\tguilds: [Guild]\n\t\ttotalFame: Int\n\t\tplayers: [Player]\n\t\tkills: Int\n\t\tdeaths: Int\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Battle {\n\t\tbattleId: Int\n\t\ttotalKills: Int\n\t\ttotalFame: Int\n\t\tplayers: [Player]\n\t\tstartTime: String\n\t\tendTime: String\n\t\twinners: Stats\n\t\tlosers: Stats\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Battle2 {\n\t\talliances: [Ally]\n\t\tendTime: Int\n\t\tguilds: [Guild]\n\t\tstartTime: String\n\t\ttotalFame: Int\n\t\ttotalKills: Int\n\t\ttotalPlayers: Int\n\t\tid: Int\n\t\tbattle_TIMEOUT: Int\n\t}\n\n\ttype Query {\n\t\tbattleList(guildName: String!): [Battle2]\n\t\tbattleById(id: Int): Battle\n\t}\n',
-			],
-			[
-				'\n\ttype Player {\n\t\tname: String\n\t\tkills: Int\n\t\tdeaths: Int\n\t\tguildName: String\n\t\tguildId: String\n\t\tallianceName: String\n\t\tallianceId: String\n\t\tid: String\n\t\tweapon: String\n\t\trole: String\n\t\tkillFame: Int\n\t\taverageIp: Float\n\t}\n\n\ttype Ally {\n\t\tname: String\n\t\tkills: Int\n\t\tkillFame: Int\n\t\tid: String\n\t\tdeaths: Int\n\t}\n\n\ttype Guild {\n\t\talliance: String\n\t\tallianceId: String\n\t\tdeaths: Int\n\t\tid: String\n\t\tkillFame: Int\n\t\tkills: Int\n\t\tname: String\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Stats {\n\t\talliances: [Ally]\n\t\tguilds: [Guild]\n\t\ttotalFame: Int\n\t\tplayers: [Player]\n\t\tkills: Int\n\t\tdeaths: Int\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Battle {\n\t\tbattleId: Int\n\t\ttotalKills: Int\n\t\ttotalFame: Int\n\t\tplayers: [Player]\n\t\tstartTime: String\n\t\tendTime: String\n\t\twinners: Stats\n\t\tlosers: Stats\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Battle2 {\n\t\talliances: [Ally]\n\t\tendTime: Int\n\t\tguilds: [Guild]\n\t\tstartTime: String\n\t\ttotalFame: Int\n\t\ttotalKills: Int\n\t\ttotalPlayers: Int\n\t\tid: Int\n\t\tbattle_TIMEOUT: Int\n\t}\n\n\ttype Query {\n\t\tbattleList(guildName: String!): [Battle2]\n\t\tbattleById(id: Int): Battle\n\t}\n',
-			]
-		))
-);
+var apollo_server_express_1 = require("apollo-server-express");
+exports.typeDefs = apollo_server_express_1.gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\ttype Player {\n\t\tname: String\n\t\tkills: Int\n\t\tdeaths: Int\n\t\tguildName: String\n\t\tguildId: String\n\t\tallianceName: String\n\t\tallianceId: String\n\t\tid: String\n\t\tweapon: String\n\t\trole: String\n\t\tkillFame: Int\n\t\taverageIp: Float\n\t}\n\n\ttype Ally {\n\t\tname: String\n\t\tkills: Int\n\t\tkillFame: Int\n\t\tid: String\n\t\tdeaths: Int\n\t}\n\n\ttype Guild {\n\t\talliance: String\n\t\tallianceId: String\n\t\tdeaths: Int\n\t\tid: String\n\t\tkillFame: Int\n\t\tkills: Int\n\t\tname: String\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Stats {\n\t\talliances: [Ally]\n\t\tguilds: [Guild]\n\t\ttotalFame: Int\n\t\tplayers: [Player]\n\t\tkills: Int\n\t\tdeaths: Int\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Battle {\n\t\tbattleId: Int\n\t\ttotalKills: Int\n\t\ttotalFame: Int\n\t\tplayers: [Player]\n\t\tstartTime: String\n\t\tendTime: String\n\t\twinners: Stats\n\t\tlosers: Stats\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Battle2 {\n\t\talliances: [Ally]\n\t\tendTime: Int\n\t\tguilds: [Guild]\n\t\tstartTime: String\n\t\ttotalFame: Int\n\t\ttotalKills: Int\n\t\ttotalPlayers: Int\n\t\tid: Int\n\t\tbattle_TIMEOUT: Int\n\t}\n\n\ttype Query {\n\t\tbattleList(guildName: String!): [Battle2]\n\t\tbattleById(id: Int): Battle\n\t}\n"], ["\n\ttype Player {\n\t\tname: String\n\t\tkills: Int\n\t\tdeaths: Int\n\t\tguildName: String\n\t\tguildId: String\n\t\tallianceName: String\n\t\tallianceId: String\n\t\tid: String\n\t\tweapon: String\n\t\trole: String\n\t\tkillFame: Int\n\t\taverageIp: Float\n\t}\n\n\ttype Ally {\n\t\tname: String\n\t\tkills: Int\n\t\tkillFame: Int\n\t\tid: String\n\t\tdeaths: Int\n\t}\n\n\ttype Guild {\n\t\talliance: String\n\t\tallianceId: String\n\t\tdeaths: Int\n\t\tid: String\n\t\tkillFame: Int\n\t\tkills: Int\n\t\tname: String\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Stats {\n\t\talliances: [Ally]\n\t\tguilds: [Guild]\n\t\ttotalFame: Int\n\t\tplayers: [Player]\n\t\tkills: Int\n\t\tdeaths: Int\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Battle {\n\t\tbattleId: Int\n\t\ttotalKills: Int\n\t\ttotalFame: Int\n\t\tplayers: [Player]\n\t\tstartTime: String\n\t\tendTime: String\n\t\twinners: Stats\n\t\tlosers: Stats\n\t\ttotalPlayers: Int\n\t}\n\n\ttype Battle2 {\n\t\talliances: [Ally]\n\t\tendTime: Int\n\t\tguilds: [Guild]\n\t\tstartTime: String\n\t\ttotalFame: Int\n\t\ttotalKills: Int\n\t\ttotalPlayers: Int\n\t\tid: Int\n\t\tbattle_TIMEOUT: Int\n\t}\n\n\ttype Query {\n\t\tbattleList(guildName: String!): [Battle2]\n\t\tbattleById(id: Int): Battle\n\t}\n"])));
 var templateObject_1;
 /*
 type Guild {
