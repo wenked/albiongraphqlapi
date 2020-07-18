@@ -107,6 +107,8 @@ class AlbionApiDataSource extends apollo_datasource_rest_1.RESTDataSource {
                         newplayer !== undefined &&
                         null &&
                         newplayer.Equipment.MainHand.Type, role: newplayer !== undefined &&
+                        newplayer !== undefined &&
+                        null &&
                         zergUtils_1.getRole(newplayer.Equipment.MainHand.Type), averageIp: newplayer !== undefined && newplayer.AverageItemPower
                         ? newplayer.AverageItemPower
                         : null });
@@ -194,7 +196,7 @@ class AlbionApiDataSource extends apollo_datasource_rest_1.RESTDataSource {
                 alliances: handlerResult().winnerAllys,
                 guilds: handlerResult().winnerGuilds,
                 totalFame: handlerResult().winnerTotalFame,
-                players: handlerResult().playersWinners,
+                players: handlerResult().playersWinners.sort((a, b) => b.killFame - a.killFame),
                 kills: handlerResult().winnerTotalKIlls,
                 deaths: handlerResult().winnerTotalDeaths,
                 totalPlayers: handlerResult().playersWinners.length,
@@ -203,7 +205,7 @@ class AlbionApiDataSource extends apollo_datasource_rest_1.RESTDataSource {
                 alliances: handlerResult().loserAllys,
                 guilds: handlerResult().loserGuilds,
                 totalFame: handlerResult().loserTotalFame,
-                players: handlerResult().playersLosers,
+                players: handlerResult().playersLosers.sort((a, b) => b.killFame - a.killFame),
                 kills: handlerResult().loserTotalKills,
                 deaths: handlerResult().loserTotalDeaths,
                 totalPlayers: handlerResult().playersLosers.length,
