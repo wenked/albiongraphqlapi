@@ -801,9 +801,19 @@
         "signature": "0380c1481690556280d2e1d5aba035bcef78a9f9b41a0abf556bf2305cf7add4",
         "affectsGlobalScope": false
       },
+      "./src/utils/playershandler.ts": {
+        "version": "d24d43c85fd54cedd8e320205c94843da64a98add57a5767ca59f0b8c42a0b5f",
+        "signature": "a44f8453df4ac55bdcc0a67be06fa73de26683cbbfe2b598d70417a64f9bfe07",
+        "affectsGlobalScope": false
+      },
+      "./src/utils/zergcomphandler.ts": {
+        "version": "d8623a475ae27bd4f69adb868dfa37c7b287437f4a3ee8d131a84a81f211fd39",
+        "signature": "d5279bb907a5cdbee3f02093a0aec2e9b8b3e48e23334e521e1584de963291d5",
+        "affectsGlobalScope": false
+      },
       "./src/albiondatasource.ts": {
-        "version": "83325067c910b54aecd8b172b6a9031698f9c07617c5e7e522fea146387b8e78",
-        "signature": "89611bdcee048c6b71a73e29e0bde4694206b5e602239919cb69a68fe4292a66",
+        "version": "d23942a6c79bc737ec00898927557bbe89f960e4f8a6e76c097012cc42ba5045",
+        "signature": "98de9c47488229ceae47e5ca5f18585313d6efa845e2f39980864fdd1673c4c5",
         "affectsGlobalScope": false
       },
       "./node_modules/graphql-extensions/dist/index.d.ts": {
@@ -2267,7 +2277,7 @@
         "affectsGlobalScope": false
       },
       "./src/models/typedefs.ts": {
-        "version": "cfa3c6d34b5b15240a883648e300ca7f976c30596a874a0e8a1209279e2f7f5a",
+        "version": "acc4180d781e043202163a15e75553e52b5e16dffacabc093a7c41d9a044f28a",
         "signature": "39b775a3b7836e625a2ce1288c39fba9bf00d8fb149db1f46d7508e2061428da",
         "affectsGlobalScope": false
       },
@@ -7296,8 +7306,10 @@
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/apollo-datasource-rest/dist/index.d.ts",
+        "./src/utils/playershandler.ts",
         "./src/utils/resulthandler.ts",
         "./src/utils/types.ts",
+        "./src/utils/zergcomphandler.ts",
         "./src/utils/zergutils.ts"
       ],
       "./src/models/typedefs.ts": [
@@ -7322,6 +7334,17 @@
         "./src/albiondatasource.ts",
         "./src/models/typedefs.ts"
       ],
+      "./src/utils/playershandler.ts": [
+        "./node_modules/@types/lodash/ts3.1/index.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/process.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/process.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./src/utils/types.ts",
+        "./src/utils/zergutils.ts"
+      ],
       "./src/utils/resulthandler.ts": [
         "./node_modules/@types/lodash/ts3.1/index.d.ts",
         "./node_modules/@types/node/fs.d.ts",
@@ -7340,6 +7363,15 @@
         "./node_modules/@types/node/ts3.2/process.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts"
+      ],
+      "./src/utils/zergcomphandler.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/process.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/process.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./src/utils/types.ts"
       ],
       "./src/utils/zergutils.ts": [
         "./node_modules/@types/node/fs.d.ts",
@@ -12304,7 +12336,13 @@
       "./src/models/typedefs.ts": [
         "./node_modules/graphql/index.d.ts"
       ],
+      "./src/utils/playershandler.ts": [
+        "./src/utils/types.ts"
+      ],
       "./src/utils/resulthandler.ts": [
+        "./src/utils/types.ts"
+      ],
+      "./src/utils/zergcomphandler.ts": [
         "./src/utils/types.ts"
       ]
     },
@@ -12769,8 +12807,10 @@
       "./src/albiondatasource.ts",
       "./src/models/typedefs.ts",
       "./src/server.ts",
+      "./src/utils/playershandler.ts",
       "./src/utils/resulthandler.ts",
       "./src/utils/types.ts",
+      "./src/utils/zergcomphandler.ts",
       "./src/utils/zergutils.ts"
     ]
   },

@@ -37,6 +37,22 @@ exports.typeDefs = apollo_server_express_1.gql `
 		totalPlayers: Int
 	}
 
+	type GuildWithComp {
+		alliance: String
+		allianceId: String
+		deaths: Int
+		id: String
+		killFame: Int
+		kills: Int
+		name: String
+		totalPlayers: Int
+		tankCount: Int
+		healerCount: Int
+		rangedDpsCount: Int
+		supportCount: Int
+		meleeCount: Int
+	}
+
 	type Stats {
 		alliances: [Ally]
 		guilds: [Guild]
@@ -50,6 +66,7 @@ exports.typeDefs = apollo_server_express_1.gql `
 	type Battle {
 		battleId: Int
 		totalKills: Int
+		guilds: [GuildWithComp]
 		totalFame: Int
 		players: [Player]
 		startTime: String

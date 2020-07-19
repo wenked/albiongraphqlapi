@@ -5,7 +5,7 @@ import {
 	organizeDeaths,
 	handleguild,
 } from './utils/zergUtils';
-import _, { merge } from 'lodash';
+import _ from 'lodash';
 import {
 	formatedPlayer,
 	Battle,
@@ -13,6 +13,8 @@ import {
 	BattleListStyle,
 } from './utils/types';
 import { resultHandler } from './utils/resultHandler';
+import playersHandler from './utils/playersHandler';
+import zergCompHandler from './utils/zergCompHandler';
 
 export class AlbionApiDataSource extends RESTDataSource {
 	constructor() {
@@ -48,7 +50,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 		const killboard: BattleListStyle = await this.get(`battles/${id}`);
 		let data = await this.get(`events/battle/${id}?offset=${offset}&limit=51`);
 		const playersKb = _.map(killboard.players, (players) => players);
-
+		console.log(playersKb);
 		for (offset = 0; data.length > 0; offset += 50) {
 			data = await this.get(`events/battle/${id}?offset=${offset}&limit=51`);
 			events.push(data);
@@ -64,143 +66,43 @@ export class AlbionApiDataSource extends RESTDataSource {
 		let killersAndAssistsEvents = participansFlat.reduce(organizeKillers, {});
 
 		let deathEvents = battleFlat.reduce(organizeDeaths, {});
+		console.log(deathEvents);
 
-		let playersWithItems = battleFlat.map((eventkill) =>
-			eventkill.GroupMembers.map(
-				(member): playerInfoWithWeapon => {
-					if (member.Equipment.MainHand === null) {
+		let playersWithItems = battleFlat
+			.map((eventkill) =>
+				eventkill.GroupMembers.map(
+					(member): playerInfoWithWeapon => {
+						if (member.Equipment.MainHand === null) {
+							return {
+								name: member.Name,
+								guild: handleguild(member.GuildName),
+								weapon: 'no weapon',
+								id: member.Id,
+								role: '',
+								guildid: member.GuildId,
+							};
+						}
 						return {
 							name: member.Name,
 							guild: handleguild(member.GuildName),
-							weapon: 'no weapon',
+							weapon: member.Equipment.MainHand.Type,
 							id: member.Id,
-							role: '',
+							role: getRole(member.Equipment.MainHand.Type),
 							guildid: member.GuildId,
 						};
 					}
-					return {
-						name: member.Name,
-						guild: handleguild(member.GuildName),
-						weapon: member.Equipment.MainHand.Type,
-						id: member.Id,
-						role: getRole(member.Equipment.MainHand.Type),
-						guildid: member.GuildId,
-					};
-				}
+				)
 			)
+			.flat();
+
+		let playersInfo = _.uniqBy(playersWithItems, 'id');
+
+		const formatedPlayers = playersHandler(
+			killboard,
+			killersAndAssistsEvents,
+			deathEvents,
+			playersInfo
 		);
-
-		const noFilterPlayersInfo = playersWithItems.flat();
-
-		let playersInfo = _.uniqBy(noFilterPlayersInfo, 'id');
-
-		const playersArray: formatedPlayer[] = playersInfo
-			.map((player) => {
-				if (
-					player !== undefined &&
-					killboard.players[player?.id] !== undefined
-				) {
-					let objplayer = killboard.players[player?.id];
-
-					return {
-						...objplayer,
-						weapon: player?.weapon,
-						role: player?.role,
-					};
-				}
-
-				return {};
-			})
-			.map((player) => {
-				if (player.killFame > 0) {
-					let newplayer = killersAndAssistsEvents[player.id];
-
-					return {
-						...player,
-						averageIp: newplayer?.AverageItemPower,
-					};
-				} else {
-					let newplayer = deathEvents[player.id];
-					return {
-						...player,
-						averageIp: newplayer?.AverageItemPower,
-					};
-				}
-			});
-
-		const mergePlayers = _.map(playersKb, (player) => {
-			let player2 = _.find(playersArray, { id: player.id });
-			if (player2 !== undefined) {
-				return player2;
-			}
-
-			return {
-				...player,
-				role: '',
-				weapon: '',
-				averageIp: 0,
-			};
-		});
-
-		const mergeWithItems = mergePlayers.map((player2) => {
-			if (player2.role !== '') {
-				return player2;
-			}
-			if (player2.killFame > 0) {
-				let newplayer = killersAndAssistsEvents[player2.id];
-
-				return {
-					...player2,
-					weapon:
-						newplayer !== undefined
-							? newplayer.Equipment.MainHand !== null
-								? newplayer.Equipment.MainHand.Type
-								: ''
-							: '',
-
-					role:
-						newplayer !== undefined
-							? newplayer.Equipment.MainHand !== null
-								? getRole(newplayer.Equipment.MainHand.Type)
-								: ''
-							: '',
-
-					averageIp:
-						newplayer !== undefined && newplayer.AverageItemPower
-							? newplayer.AverageItemPower
-							: 0,
-				};
-			}
-			let newplayer = deathEvents[player2.id];
-			return {
-				...player2,
-				weapon:
-					newplayer !== undefined
-						? newplayer.Equipment.MainHand !== null
-							? newplayer.Equipment.MainHand.Type
-							: ''
-						: '',
-				role:
-					newplayer !== undefined
-						? newplayer.Equipment.MainHand !== null
-							? getRole(newplayer.Equipment.MainHand.Type)
-							: ''
-						: '',
-				averageIp:
-					newplayer !== undefined && newplayer.AverageItemPower
-						? newplayer.AverageItemPower
-						: 0,
-			};
-		});
-
-		const teste = mergeWithItems.map((player) => {
-			return {
-				...player,
-				averageIp: player.averageIp == null ? 0 : player.averageIp,
-			};
-		});
-
-		console.log(teste);
 
 		const {
 			winnerGuilds,
@@ -215,13 +117,19 @@ export class AlbionApiDataSource extends RESTDataSource {
 			winnerTotalDeaths,
 			winnerTotalFame,
 			winnerTotalKIlls,
-		} = resultHandler(killboard, mergeWithItems);
+		} = resultHandler(killboard, formatedPlayers);
+
+		const guildsWithComp = zergCompHandler(
+			winnerGuilds.concat(loserGuilds),
+			formatedPlayers
+		);
 
 		return {
 			battleId: killboard.id,
 			totalKills: killboard.totalKills,
+			guilds: guildsWithComp,
 			totalFame: killboard.totalFame,
-			players: playersArray,
+			players: formatedPlayers,
 			startTime: killboard.startTime,
 			endTime: killboard.endTime,
 			totalPlayers: _.map(killboard.players, (players) => players).length,
