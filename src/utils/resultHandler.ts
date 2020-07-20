@@ -7,7 +7,7 @@ const reducer = (acc: any, vAt: any) => {
 };
 export const resultHandler = (
 	killboard: BattleListStyle,
-	mergeWithItems: formatedPlayer[]
+	mergeWithItems?: formatedPlayer[]
 ) => {
 	const arrAlly: Alliance[] = _.map(
 		killboard.alliances,
@@ -28,6 +28,46 @@ export const resultHandler = (
 	const winnerAlly = arrAlly[0];
 
 	const winnerGuild = arrGuild[0];
+
+	if (mergeWithItems === undefined) {
+		if (winnerGuild.killFame > winnerAlly.killFame) {
+			const winnerGuilds = arrGuild.filter(
+				(guild) => guild.name === winnerGuild.name
+			);
+			const losersGuilds = arrGuild.filter(
+				(guild) => guild.name !== winnerGuild.name
+			);
+
+			return {
+				winnerGuildsStrings: winnerGuilds.map((guild) => guild.name),
+				loserGuildsStrings: losersGuilds.map((guild) => guild.name),
+				loserAllysStrings: arrAlly.map((guild) => guild.name),
+				winnerAllysStrings: [],
+			};
+		}
+		const winnerAllys = arrAlly.filter(
+			(guild) => guild.name === winnerAlly.name
+		);
+
+		const loserAllys = arrAlly.filter(
+			(guild) => guild.name !== winnerAlly.name
+		);
+
+		const winnerGuilds = arrGuild.filter(
+			(guild) => guild.alliance === winnerAlly.name
+		);
+
+		const loserGuilds = arrGuild.filter(
+			(guild) => guild.alliance !== winnerAlly.name
+		);
+
+		return {
+			winnerGuildsStrings: winnerGuilds.map((guild) => guild.name),
+			loserGuildsStrings: loserGuilds.map((guild) => guild.name),
+			winnerAllysStrings: winnerAllys.map((guild) => guild.name),
+			loserAllysStrings: loserAllys.map((guild) => guild.name),
+		};
+	}
 
 	if (winnerGuild.killFame > winnerAlly.killFame) {
 		const winnerGuilds = arrGuild.filter(

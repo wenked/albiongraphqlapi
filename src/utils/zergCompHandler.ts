@@ -5,27 +5,35 @@ const zergCompHandler = (guilds: Guild[], players: formatedPlayer[]) => {
 		let guildPlayers = players.filter(
 			(player) => player.guildName === guild.name
 		);
-		let tankCount = guildPlayers.filter((player) => player.role === 'Tank')
-			.length;
-		let healerCount = guildPlayers.filter((player) => player.role === 'Healer')
-			.length;
+		let tankCount = guildPlayers.filter((player) => player.role === 'Tank');
+		let healerCount = guildPlayers.filter((player) => player.role === 'Healer');
 		let rangedDpsCount = guildPlayers.filter(
 			(player) => player.role === 'Ranged Dps'
-		).length;
+		);
 		let supportCount = guildPlayers.filter(
 			(player) => player.role === 'Support'
-		).length;
+		);
 		let meleeCount = guildPlayers.filter(
 			(player) => player.role === 'Melee Dps'
-		).length;
+		);
+
+		let guildAverageIp =
+			guildPlayers.reduce((acc: any, vat: any) => acc + vat.averageIp, 0) !==
+				0 &&
+			Math.floor(
+				guildPlayers.reduce((acc: any, vat: any) => acc + vat.averageIp, 0) /
+					guildPlayers.filter((player) => player.averageIp !== 0).length
+			);
+		console.log(guildAverageIp);
 
 		return {
 			...guild,
-			tankCount,
-			healerCount,
-			rangedDpsCount,
-			supportCount,
-			meleeCount,
+			guildAverageIp,
+			tanks: tankCount,
+			healers: healerCount,
+			rangedDps: rangedDpsCount,
+			supports: supportCount,
+			melees: meleeCount,
 		};
 	});
 

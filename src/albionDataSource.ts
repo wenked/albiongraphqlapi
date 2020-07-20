@@ -30,6 +30,12 @@ export class AlbionApiDataSource extends RESTDataSource {
 		);
 
 		return battles?.map((battle: BattleListStyle) => {
+			const {
+				winnerGuildsStrings,
+				loserGuildsStrings,
+				winnerAllysStrings,
+				loserAllysStrings,
+			} = resultHandler(battle);
 			return {
 				alliances: _.map(battle.alliances, (alliance) => alliance),
 				battle_TIMEOUT: battle.battle_TIMEOUT,
@@ -40,6 +46,10 @@ export class AlbionApiDataSource extends RESTDataSource {
 				totalFame: battle.totalFame,
 				totalKills: battle.totalKills,
 				totalPlayers: _.map(battle.players, (player) => player).length,
+				winnerGuilds: winnerGuildsStrings,
+				winnerAllys: winnerAllysStrings,
+				losersAllys: loserAllysStrings,
+				losersGuilds: loserGuildsStrings,
 			};
 		});
 	}
@@ -49,8 +59,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 		let events: Battle[] = [];
 		const killboard: BattleListStyle = await this.get(`battles/${id}`);
 		let data = await this.get(`events/battle/${id}?offset=${offset}&limit=51`);
-		const playersKb = _.map(killboard.players, (players) => players);
-		console.log(playersKb);
+
 		for (offset = 0; data.length > 0; offset += 50) {
 			data = await this.get(`events/battle/${id}?offset=${offset}&limit=51`);
 			events.push(data);
@@ -66,7 +75,6 @@ export class AlbionApiDataSource extends RESTDataSource {
 		let killersAndAssistsEvents = participansFlat.reduce(organizeKillers, {});
 
 		let deathEvents = battleFlat.reduce(organizeDeaths, {});
-		console.log(deathEvents);
 
 		let playersWithItems = battleFlat
 			.map((eventkill) =>

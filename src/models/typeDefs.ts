@@ -44,11 +44,12 @@ export const typeDefs = gql`
 		kills: Int
 		name: String
 		totalPlayers: Int
-		tankCount: Int
-		healerCount: Int
-		rangedDpsCount: Int
-		supportCount: Int
-		meleeCount: Int
+		guildAverageIp: Float
+		tanks: [Player]
+		healers: [Player]
+		rangedDps: [Player]
+		supports: [Player]
+		melees: [Player]
 	}
 
 	type Stats {
@@ -84,6 +85,10 @@ export const typeDefs = gql`
 		totalPlayers: Int
 		id: Int
 		battle_TIMEOUT: Int
+		winnerGuilds: [String]
+		losersGuilds: [String]
+		winnerAllys: [String]
+		losersAllys: [String]
 	}
 
 	type Query {
@@ -138,7 +143,7 @@ type Guild {
 		TimeStamp: String!
 		TotalVictimKillFame: Int
 		Victim: Player!
-		groupMemberCount: Int
+		groupMember:[Player]
 		numberOfParticipants: Int
 	}
 
