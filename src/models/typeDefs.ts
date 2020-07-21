@@ -44,6 +44,7 @@ export const typeDefs = gql`
 		kills: Int
 		name: String
 		totalPlayers: Int
+		players: [Player]
 		guildAverageIp: Float
 		tanks: [Player]
 		healers: [Player]
