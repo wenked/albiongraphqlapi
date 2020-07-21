@@ -36,6 +36,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 				winnerAllysStrings,
 				loserAllysStrings,
 			} = resultHandler(battle);
+
 			return {
 				alliances: _.map(battle.alliances, (alliance) => alliance),
 				battle_TIMEOUT: battle.battle_TIMEOUT,

@@ -77,7 +77,7 @@ export const typeDefs = gql`
 
 	type Battle2 {
 		alliances: [Ally]
-		endTime: Int
+		endTime: String
 		guilds: [Guild]
 		startTime: String
 		totalFame: Int
