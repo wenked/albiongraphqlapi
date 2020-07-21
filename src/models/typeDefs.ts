@@ -54,7 +54,7 @@ export const typeDefs = gql`
 
 	type Stats {
 		alliances: [Ally]
-		guilds: [Guild]
+		guilds: [GuildWithComp]
 		totalFame: Int
 		players: [Player]
 		kills: Int

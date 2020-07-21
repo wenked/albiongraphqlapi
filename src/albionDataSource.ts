@@ -144,7 +144,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 			totalPlayers: _.map(killboard.players, (players) => players).length,
 			winners: {
 				alliances: winnerAllys,
-				guilds: winnerGuilds,
+				guilds: zergCompHandler(winnerGuilds, formatedPlayers),
 				totalFame: winnerTotalFame,
 				players: playersWinners.sort((a, b) => b.killFame - a.killFame),
 				kills: winnerTotalKIlls,
@@ -153,7 +153,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 			},
 			losers: {
 				alliances: loserAllys,
-				guilds: loserGuilds,
+				guilds: zergCompHandler(loserGuilds, formatedPlayers),
 				totalFame: loserTotalFame,
 				players: playersLosers.sort((a, b) => b.killFame - a.killFame),
 				kills: loserTotalKills,
