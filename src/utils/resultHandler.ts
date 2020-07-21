@@ -28,7 +28,7 @@ export const resultHandler = (
 	const winnerAlly = arrAlly[0] !== undefined && arrAlly[0];
 
 	const winnerGuild = arrGuild[0];
-	console.log(winnerAlly);
+
 	if (mergeWithItems === undefined) {
 		if (winnerGuild.killFame > winnerAlly.killFame) {
 			const winnerGuilds = arrGuild.filter(
@@ -37,8 +37,6 @@ export const resultHandler = (
 			const losersGuilds = arrGuild.filter(
 				(guild) => guild.name !== winnerGuild.name
 			);
-
-			console.log(winnerGuild, losersGuilds);
 
 			return {
 				winnerGuildsStrings: winnerGuilds.map((guild) => guild.name),

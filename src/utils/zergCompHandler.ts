@@ -24,7 +24,6 @@ const zergCompHandler = (guilds: Guild[], players: formatedPlayer[]) => {
 				guildPlayers.reduce((acc: any, vat: any) => acc + vat.averageIp, 0) /
 					guildPlayers.filter((player) => player.averageIp !== 0).length
 			);
-		console.log(guildAverageIp);
 
 		return {
 			...guild,

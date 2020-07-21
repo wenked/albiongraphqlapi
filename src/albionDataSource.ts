@@ -6,12 +6,7 @@ import {
 	handleguild,
 } from './utils/zergUtils';
 import _ from 'lodash';
-import {
-	formatedPlayer,
-	Battle,
-	playerInfoWithWeapon,
-	BattleListStyle,
-} from './utils/types';
+import { Battle, playerInfoWithWeapon, BattleListStyle } from './utils/types';
 import { resultHandler } from './utils/resultHandler';
 import playersHandler from './utils/playersHandler';
 import zergCompHandler from './utils/zergCompHandler';
@@ -26,7 +21,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 		const data = await this.get(`search?q=${guildname}`);
 
 		const battles: BattleListStyle[] | undefined = await this.get(
-			`battles?offset=0&limit=50&sort=recent&guildId=${data.guilds[0].Id}`
+			`battles?offset=0&limit=51&sort=recent&guildId=${data.guilds[0].Id}`
 		);
 
 		return battles?.map((battle: BattleListStyle) => {
