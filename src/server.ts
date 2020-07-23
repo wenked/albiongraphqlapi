@@ -4,8 +4,6 @@ import { typeDefs } from './models/typeDefs';
 import express from 'express';
 import { AlbionApiDataSource } from './albionDataSource';
 import dotenv from 'dotenv';
-import Redis from 'ioredis';
-import { RedisCache } from 'apollo-server-cache-redis';
 import _ from 'lodash';
 
 const app = express();
