@@ -4,15 +4,18 @@ import { typeDefs } from './models/typeDefs';
 import express from 'express';
 import { AlbionApiDataSource } from './albionDataSource';
 import dotenv from 'dotenv';
+import Redis from 'ioredis';
+import { RedisCache } from 'apollo-server-cache-redis';
+import _ from 'lodash';
 
 const app = express();
 dotenv.config();
 const resolvers: IResolverObject = {
 	Query: {
-		battleList: (obj, args, { dataSources }, info) => {
+		battleList: async (obj, args, { dataSources }, info) => {
 			return dataSources.albionApi.getBattles(args.guildName);
 		},
-		battleById: (obj, args, { dataSources }, info) => {
+		battleById: async (obj, args, { dataSources, cache }, info) => {
 			return dataSources.albionApi.getBattleById(args.id);
 		},
 	},
@@ -21,6 +24,7 @@ const resolvers: IResolverObject = {
 const server = new ApolloServer({
 	typeDefs,
 	resolvers: resolvers as any,
+
 	engine: {
 		reportSchema: true,
 	},

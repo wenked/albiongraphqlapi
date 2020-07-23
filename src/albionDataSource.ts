@@ -10,7 +10,12 @@ import { Battle, playerInfoWithWeapon, BattleListStyle } from './utils/types';
 import { resultHandler } from './utils/resultHandler';
 import playersHandler from './utils/playersHandler';
 import zergCompHandler from './utils/zergCompHandler';
+import Redis from 'ioredis';
+import dotenv from 'dotenv';
 
+dotenv.config();
+
+const redis = new Redis(process.env.REDIS_URL);
 export class AlbionApiDataSource extends RESTDataSource {
 	constructor() {
 		super();
@@ -18,13 +23,49 @@ export class AlbionApiDataSource extends RESTDataSource {
 	}
 
 	async getBattles(guildname: string) {
-		const data = await this.get(`search?q=${guildname}`);
+		if ((await redis.llen(guildname)) !== 0) {
+			const resp = await redis.lrange(guildname, 0, -1);
 
+			const teste = resp.map((x: string) => JSON.parse(x));
+			console.log('redis');
+			return teste?.map((battle: BattleListStyle) => {
+				const {
+					winnerGuildsStrings,
+					loserGuildsStrings,
+					winnerAllysStrings,
+					loserAllysStrings,
+				} = resultHandler(battle);
+
+				return {
+					alliances: _.map(battle.alliances, (alliance) => alliance),
+					battle_TIMEOUT: battle.battle_TIMEOUT,
+					endTime: battle.endTime,
+					guilds: _.map(battle.guilds, (guild) => guild),
+					id: battle.id,
+					startTime: battle.startTime,
+					totalFame: battle.totalFame,
+					totalKills: battle.totalKills,
+					totalPlayers: _.map(battle.players, (player) => player).length,
+					winnerGuilds: winnerGuildsStrings,
+					winnerAllys: winnerAllysStrings,
+					losersAllys: loserAllysStrings,
+					losersGuilds: loserGuildsStrings,
+				};
+			});
+		}
+		const data = await this.get(`search?q=${guildname}`);
 		const battles: BattleListStyle[] | undefined = await this.get(
 			`battles?offset=0&limit=51&sort=recent&guildId=${data.guilds[0].Id}`
 		);
 
-		return battles?.map((battle: BattleListStyle) => {
+		const bStrings = battles.map((x) => JSON.stringify(x));
+		bStrings.forEach((x: string) => redis.lpush(guildname, x));
+		redis.expire(guildname, 900);
+		const resp = await redis.lrange(guildname, 0, -1);
+		console.log('eu q estou sendo executado');
+		const teste = resp.map((x: string) => JSON.parse(x));
+
+		return teste?.map((battle: BattleListStyle) => {
 			const {
 				winnerGuildsStrings,
 				loserGuildsStrings,
@@ -51,6 +92,12 @@ export class AlbionApiDataSource extends RESTDataSource {
 	}
 
 	async getBattleById(id: number) {
+		const stringId = id.toString();
+		if (await redis.get(stringId)) {
+			console.log('redis aqui');
+			const resp = await redis.get(stringId);
+			return JSON.parse(resp);
+		}
 		let offset = 0;
 		let events: Battle[] = [];
 		const killboard: BattleListStyle = await this.get(`battles/${id}`);
@@ -128,7 +175,7 @@ export class AlbionApiDataSource extends RESTDataSource {
 			formatedPlayers
 		);
 
-		return {
+		const battleDetail = {
 			battleId: killboard.id,
 			totalKills: killboard.totalKills,
 			guilds: guildsWithComp,
@@ -156,5 +203,11 @@ export class AlbionApiDataSource extends RESTDataSource {
 				totalPlayers: playersLosers.length,
 			},
 		};
+		console.log('sem redis');
+		const battleDetailString = JSON.stringify(battleDetail);
+		await redis.set(stringId, battleDetailString);
+		redis.expire(stringId, 900);
+
+		return battleDetail;
 	}
 }
