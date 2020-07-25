@@ -11,7 +11,7 @@ dotenv.config();
 const resolvers: IResolverObject = {
 	Query: {
 		battleList: async (obj, args, { dataSources }, info) => {
-			return dataSources.albionApi.getBattles(args.guildName);
+			return dataSources.albionApi.getBattles(args.guildName, args.offSet);
 		},
 		battleById: async (obj, args, { dataSources, cache }, info) => {
 			return dataSources.albionApi.getBattleById(args.id);

@@ -22,9 +22,13 @@ export class AlbionApiDataSource extends RESTDataSource {
 		this.baseURL = 'https://gameinfo.albiononline.com/api/gameinfo/';
 	}
 
-	async getBattles(guildname: string) {
-		if ((await redis.llen(guildname)) !== 0) {
-			const resp = await redis.lrange(guildname, 0, -1);
+	async getBattles(guildname: string, offset: number) {
+		if ((await redis.llen(JSON.stringify(offset) + guildname)) !== 0) {
+			const resp = await redis.lrange(
+				JSON.stringify(offset) + guildname,
+				0,
+				-1
+			);
 
 			const teste = resp.map((x: string) => JSON.parse(x));
 			console.log('redis');
@@ -54,14 +58,16 @@ export class AlbionApiDataSource extends RESTDataSource {
 			});
 		}
 		const data = await this.get(`search?q=${guildname}`);
+		console.log(offset);
 		const battles: BattleListStyle[] | undefined = await this.get(
-			`battles?offset=0&limit=51&sort=recent&guildId=${data.guilds[0].Id}`
+			`battles?offset=${offset}&limit=51&sort=recent&guildId=${data.guilds[0].Id}`
 		);
-
+		const guildAndOffset = JSON.stringify(offset) + guildname;
 		const bStrings = battles.map((x) => JSON.stringify(x));
-		bStrings.forEach((x: string) => redis.lpush(guildname, x));
-		redis.expire(guildname, 900);
-		const resp = await redis.lrange(guildname, 0, -1);
+
+		bStrings.forEach((x: string) => redis.lpush(guildAndOffset, x));
+		redis.expire(guildAndOffset, 900);
+		const resp = await redis.lrange(guildAndOffset, 0, -1);
 		console.log('eu q estou sendo executado');
 		const teste = resp.map((x: string) => JSON.parse(x));
 

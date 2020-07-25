@@ -93,7 +93,7 @@ export const typeDefs = gql`
 	}
 
 	type Query {
-		battleList(guildName: String!): [Battle2]
+		battleList(guildName: String!, offSet: Int!): [Battle2]
 		battleById(id: Int): Battle
 	}
 `;
