@@ -48,6 +48,7 @@ const SupportArray = [
 ];
 
 const RangedDpsArray = [
+	'Mistpiercer',
 	'Permafrost Prism',
 	'Frost Staff',
 	'Great Frost Staff',
@@ -865,6 +866,10 @@ const supportArray: formatedItem = {
 };
 
 const rangedDps: formatedItem = {
+	'T6_2H_BOW_AVALON': "Master's Mistpiercer",
+'T6_2H_BOW_AVALON@1': "Master's Mistpiercer",
+'T6_2H_BOW_AVALON@2': "Master's Mistpiercer",
+'T6_2H_BOW_AVALON@3': "Master's Mistpiercer",
 	T4_2H_ICECRYSTAL_UNDEAD: "Adept's Permafrost Prism",
 	'T4_2H_ICECRYSTAL_UNDEAD@1': "Adept's Permafrost Prism",
 	'T4_2H_ICECRYSTAL_UNDEAD@2': "Adept's Permafrost Prism",

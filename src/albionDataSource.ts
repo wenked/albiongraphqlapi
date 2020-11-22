@@ -57,21 +57,20 @@ export class AlbionApiDataSource extends RESTDataSource {
 				};
 			});
 		}
-		const data = await this.get(`search?q=${guildname}`);
-		console.log(offset);
+		const guildsData = await this.get(`search?q=${guildname}`);
 		const battles: BattleListStyle[] | undefined = await this.get(
-			`battles?offset=${offset}&limit=51&sort=recent&guildId=${data.guilds[0].Id}`
+			`battles?offset=${offset}&limit=51&sort=recent&guildId=${guildsData.guilds[0].Id}`
 		);
 		const guildAndOffset = JSON.stringify(offset) + guildname;
-		const bStrings = battles.map((x) => JSON.stringify(x));
+		const battleStrings = battles.map((x) => JSON.stringify(x));
 
-		bStrings.forEach((x: string) => redis.lpush(guildAndOffset, x));
+		battleStrings.forEach((x: string) => redis.lpush(guildAndOffset, x));
 		redis.expire(guildAndOffset, 900);
 		const resp = await redis.lrange(guildAndOffset, 0, -1);
 		console.log('eu q estou sendo executado');
-		const teste = resp.map((x: string) => JSON.parse(x));
+		const cachedData = resp.map((x: string) => JSON.parse(x));
 
-		return teste?.map((battle: BattleListStyle) => {
+		return cachedData?.map((battle: BattleListStyle) => {
 			const {
 				winnerGuildsStrings,
 				loserGuildsStrings,
