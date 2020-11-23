@@ -866,6 +866,21 @@ const supportArray: formatedItem = {
 };
 
 const rangedDps: formatedItem = {
+	'T4_2H_BOW_AVALON':"Adept's Mistpiercer ",
+	'T4_2H_BOW_AVALON@1': "Adept's Mistpiercer",
+'T4_2H_BOW_AVALON@2':" Adept's Mistpiercer", 
+'T4_2H_BOW_AVALON@3': "Adept's Mistpiercer",
+'T5_2H_BOW_AVALON ' : "Expert's Mistpiercer",
+'T5_2H_BOW_AVALON@1': "Expert's Mistpiercer",
+'T5_2H_BOW_AVALON@2':" Expert's Mistpiercer",
+'T5_2H_BOW_AVALON@' : "Expert's Mistpiercer",                                                                                 
+ 'T7_2H_BOW_AVALON:' :"Grandmaster's Mistpiercer ",
+ 'T7_2H_BOW_AVALON@1': "Grandmaster's Mistpiercer",
+ 'T7_2H_BOW_AVALON@3': "Grandmaster's Mistpiercer", 
+ 'T8_2H_BOW_AVALON':"Elder's Mistpiercer ", 
+ 'T8_2H_BOW_AVALON@1': "Elder's Mistpiercer",
+'T8_2H_BOW_AVALON@2':" Elder's Mistpiercer",
+'T8_2H_BOW_AVALON@3': "Elder's Mistpiercer",
 	'T6_2H_BOW_AVALON': "Master's Mistpiercer",
 'T6_2H_BOW_AVALON@1': "Master's Mistpiercer",
 'T6_2H_BOW_AVALON@2': "Master's Mistpiercer",
