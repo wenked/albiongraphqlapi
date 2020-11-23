@@ -48,6 +48,7 @@ const SupportArray = [
 ];
 
 const RangedDpsArray = [
+	'Energy Shaper',
 	'Mistpiercer',
 	'Permafrost Prism',
 	'Frost Staff',
@@ -866,6 +867,10 @@ const supportArray: formatedItem = {
 };
 
 const rangedDps: formatedItem = {
+	'T6_2H_CROSSBOW_CANNON_AVALON': "Master's Energy Shaper",
+	'T6_2H_CROSSBOW_CANNON_AVALON@1':"Master's Energy Shaper",
+	'T6_2H_CROSSBOW_CANNON_AVALON@2':"Master's Energy Shaper",
+	'T6_2H_CROSSBOW_CANNON_AVALON@3':"Master's Energy Shaper",
 	'T4_2H_BOW_AVALON': "Adept's Mistpiercer ",
 	'T4_2H_BOW_AVALON@1': "Adept's Mistpiercer",
 	'T4_2H_BOW_AVALON@2': "Adept's Mistpiercer", 
