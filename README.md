@@ -15,7 +15,7 @@ Ex:
 		winnerAllys
 		losersAllys
 	}
-};
+}
 
  queryBattleDetail = 
 query Battle($id: Int!) {
@@ -104,6 +104,6 @@ query Battle($id: Int!) {
 	}
   }
 
-;
+
 
 https://ablionapigraphql.herokuapp.com/graphql
