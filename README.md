@@ -1,109 +1,307 @@
 Graphql wrapper to Albion online official API , this wrapper helps to find battles and zerg compositions of each guild in battles . 
 
 
-Ex: 
-`export const queryBattleList = `query Battles($guildName: String!,$offSet: Int!){
-	battleList(guildName: $guildName, offSet: $offSet){
-		endTime
-		totalFame
-		totalKills
-		totalPlayers
-		id
-		winnerGuilds
-		losersGuilds
-		winnerAllys
-		losersAllys
-	}
-}`;
+Ex: Queries
+BattleList
+`{
+  battleList(guildName:"R A I D",offSet:20){
+    alliances{
+      name
+      kills
+      killFame
+      id
+      deaths
+    }
+    endTime
+    startTime
+    totalFame
+    totalKills
+    totalPlayers
+    id
+    winnerAllys
+    losersAllys
+    winnerGuilds
+    losersGuilds
+    
+     guilds{
+      name
 
-export const queryBattleDetail = `
-query Battle($id: Int!) {
-	battleById(id: $id) {
-	  battleId
-	  totalKills
-	  totalFame
-	  totalPlayers
-	  guilds {
-		alliance
-		deaths
-		totalPlayers
-		kills
-		name
-		guildAverageIp
-		killFame
-		tanks {
-			weapon
-			role	
-		}
-		healers	{
-			weapon
-			role	
-		}
-		supports {
-			weapon
-			role	
-		}
-		rangedDps{
-			weapon
-			role	
-		}
-		melees{
-			weapon
-			role	
-		}
-
-	  }
-	  winners {
-		players{
-			id
-			name
-			kills
-			deaths
-			guildName
-			allianceName
-			weapon
-			averageIp
-			killFame
-		  }
-		guilds {
-		  alliance
-		  deaths
-		  totalPlayers
-		  kills
-		  name
-		  guildAverageIp
-		  killFame
-		  
-		}
-	  }
-	  losers {
-		players{
-			id
-			name
-			kills
-			deaths
-			guildName
-			allianceName
-			weapon
-			averageIp
-			killFame
-			
-		  }
-		guilds {
-		  alliance
-		  deaths
-		  totalPlayers
-		  kills
-		  name
-		  guildAverageIp
-		  killFame
-		  
-		}
-	  }
-	}
+      allianceId
+      deaths
+      id
+      killFame
+      kills
+      name
+      
+    }
   }
+}`
 
-`; `
 
+Battle by Id
+`{
+  battleById(id:194630205){
+    battleId
+    totalKills
+    totalFame
+    players{
+      name
+      kills
+      deaths
+      guildName
+      guildId
+      allianceName
+      allianceId
+      id
+      weapon
+      role
+      killFame
+      averageIp
+      
+    }
+    startTime
+    endTime
+    winners{
+       alliances{
+        name
+        kills
+        killFame
+        deaths
+        id
+      }
+      guilds{
+        alliance
+        allianceId
+        deaths
+        id
+        killFame
+        kills
+        name
+        totalPlayers
+        guildAverageIp
+        totalPlayers
+          players{
+        name
+        kills
+        deaths
+        guildName
+        guildId
+        allianceName
+        allianceId
+        id
+        weapon
+        role
+        killFame
+        averageIp
+      }
+        tanks{
+          name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        healers{
+           name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        rangedDps{
+           name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        supports{
+           name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        melees{
+          name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        
+        
+      }
+      totalFame
+     
+      kills
+      deaths
+      totalPlayers
+    }
+    losers{
+      alliances{
+        name
+        kills
+        killFame
+        deaths
+        id
+      }
+       guilds{
+        alliance
+        allianceId
+        deaths
+        id
+        killFame
+        kills
+        name
+        totalPlayers
+        guildAverageIp
+        totalPlayers
+        players{
+        name
+        kills
+        deaths
+        guildName
+        guildId
+        allianceName
+        allianceId
+        id
+        weapon
+        role
+        killFame
+        averageIp
+      }
+        tanks{
+          name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        healers{
+           name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        rangedDps{
+           name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        supports{
+           name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        melees{
+          name
+          kills
+          deaths
+          guildName
+          guildId
+          allianceName
+          allianceId
+          id
+          weapon
+          role
+          killFame
+          averageIp
+        }
+        
+        
+      }
+      totalFame
+      players{
+        name
+        kills
+        deaths
+        guildName
+        guildId
+        allianceName
+        allianceId
+        id
+        weapon
+        role
+        killFame
+        averageIp
+      }
+      kills
+      deaths
+      totalPlayers
+      
+    }
+    totalPlayers
+    
+  }
+}`
 
 https://ablionapigraphql.herokuapp.com/graphql
