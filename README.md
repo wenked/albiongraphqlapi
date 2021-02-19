@@ -3,7 +3,7 @@ Graphql wrapper to Albion online official API , this wrapper helps to find battl
 
 Ex: 
 
- queryBattleList = `query Battles($guildName: String!,$offSet: Int!){
+ queryBattleList = query Battles($guildName: String!,$offSet: Int!){
 	battleList(guildName: $guildName, offSet: $offSet){
 		endTime
 		totalFame
@@ -15,9 +15,9 @@ Ex:
 		winnerAllys
 		losersAllys
 	}
-}`;
+};
 
- queryBattleDetail = `
+ queryBattleDetail = 
 query Battle($id: Int!) {
 	battleById(id: $id) {
 	  battleId
@@ -104,6 +104,6 @@ query Battle($id: Int!) {
 	}
   }
 
-`;
+;
 
 https://ablionapigraphql.herokuapp.com/graphql
