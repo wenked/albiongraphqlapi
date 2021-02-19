@@ -1,9 +1,10 @@
 Graphql wrapper to Albion online official API , this wrapper helps to find battles and zerg compositions of each guild in battles . 
 
 
-Ex: Queries
+Ex:
+`
 BattleList
-`{
+{
   battleList(guildName:"R A I D",offSet:20){
     alliances{
       name
@@ -35,7 +36,9 @@ BattleList
       
     }
   }
-}`
+} `
+
+
 
 
 Battle by Id
