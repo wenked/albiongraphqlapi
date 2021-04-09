@@ -1,4 +1,4 @@
-import { RESTDataSource } from 'apollo-datasource-rest';
+import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import {
 	getRole,
 	organizeKillers,
@@ -12,8 +12,13 @@ import playersHandler from './utils/playersHandler';
 import zergCompHandler from './utils/zergCompHandler';
 import Redis from 'ioredis';
 import dotenv from 'dotenv';
+import { RequestInit } from 'apollo-server-env';
 
 dotenv.config();
+
+const requestInit: RequestInit = {
+	timeout: 60000,
+};
 
 const redis = new Redis(process.env.REDIS_URL);
 export class AlbionApiDataSource extends RESTDataSource {
@@ -57,10 +62,11 @@ export class AlbionApiDataSource extends RESTDataSource {
 				};
 			});
 		}
-		const guildsData = await this.get(`search?q=${guildname}`);
+		const guildsData = await this.get(`search?q=${guildname}`, {}, requestInit);
 		const battles: BattleListStyle[] | undefined = await this.get(
 			`battles?offset=${offset}&limit=51&sort=recent&guildId=${guildsData.guilds[0].Id}`
 		);
+
 		const guildAndOffset = JSON.stringify(offset) + guildname;
 		const battleStrings = battles.map((x) => JSON.stringify(x));
 
@@ -105,11 +111,23 @@ export class AlbionApiDataSource extends RESTDataSource {
 		}
 		let offset = 0;
 		let events: Battle[] = [];
-		const killboard: BattleListStyle = await this.get(`battles/${id}`);
-		let data = await this.get(`events/battle/${id}?offset=${offset}&limit=51`);
+		const killboard: BattleListStyle = await this.get(
+			`battles/${id}`,
+			{},
+			requestInit
+		);
+		let data = await this.get(
+			`events/battle/${id}?offset=${offset}&limit=51`,
+			{},
+			requestInit
+		);
 
 		for (offset = 0; data.length > 0; offset += 50) {
-			data = await this.get(`events/battle/${id}?offset=${offset}&limit=51`);
+			data = await this.get(
+				`events/battle/${id}?offset=${offset}&limit=51`,
+				{},
+				requestInit
+			);
 			events.push(data);
 		}
 
