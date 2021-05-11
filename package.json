@@ -32,7 +32,7 @@
 		"express": "^4.17.1",
 		"graphql": "^15.3.0",
 		"ioredis": "^4.17.3",
-		"lodash": "^4.17.19",
+		"lodash": "^4.17.21",
 		"ts-node-dev": "^1.0.0-pre.51",
 		"typescript": "^3.9.6"
 	}
